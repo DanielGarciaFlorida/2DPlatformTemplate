@@ -46,5 +46,7 @@ public class PlayerScript : MonoBehaviour
             Debug.Log("Jumping");
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
+        //To check the interactions and phase understanding
+        Debug.Log(callbackContext.phase);
     }
 }
