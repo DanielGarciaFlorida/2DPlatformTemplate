@@ -1,28 +1,36 @@
 using UnityEngine;
 //Import namespace to use callback
 using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerScript : MonoBehaviour
 {
     public float speed = 1.0f;
     public float jumpForce = 10.0f;
+    private Vector2 move;
     Rigidbody2D rb;
+    PlayerInput playerInput;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerInput = GetComponent<PlayerInput>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //Check the input on each frame
+        //Rewrite this "Vector2 move = callbackContext.ReadValue<Vector2>();" as:
+        move = playerInput.actions["Movement"].ReadValue<Vector2>();
+        Debug.Log(move);
     }
 
     private void FixedUpdate()
     {
-        
+        rb.AddForce(new Vector2(move.x, 0f) * speed, ForceMode2D.Impulse);
+
     }
 
     /*
@@ -50,7 +58,7 @@ public class PlayerScript : MonoBehaviour
         //To check the interactions and phase understanding
         Debug.Log(callbackContext.phase);
     }
-
+    /*
     // Multiple pressing to perform movement...
     public void Move(InputAction.CallbackContext callbackContext)
     {
@@ -61,4 +69,5 @@ public class PlayerScript : MonoBehaviour
             rb.AddForce(new Vector2(move.x, 0f) * speed, ForceMode2D.Impulse);
         }
     }
+    */
 }
